@@ -1,0 +1,12 @@
+node_modules/
+dist/
+release/
+output/
+.venv/
+.venv-packaging/
+build/
+.DS_Store
+.models/
+.pytest_cache/
+__pycache__/
+*.tsbuildinfo
