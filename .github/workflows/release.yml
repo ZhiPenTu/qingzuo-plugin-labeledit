@@ -68,6 +68,7 @@ jobs:
             echo "QINGZUO_HOST_EXECUTABLE=$PWD/host/desktop/win-unpacked/Qingzuo.exe" >> "$GITHUB_ENV"
           fi
       - name: Build and test plugin
+        if: env.QINGZUO_PUBLIC_MARKET != '1'
         run: |
           npm ci --ignore-scripts
           npm test
@@ -86,12 +87,19 @@ jobs:
           fi
           npm run pack
           npm run test:host
+      - name: Accept the signed public plugin without repackaging it
+        if: env.QINGZUO_PUBLIC_MARKET == '1'
+        run: |
+          npm ci --ignore-scripts
+          python -m pip install pypdf==6.19.0
+          npm run test:host
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Acceptance-${{ runner.os }}
           path: output/
       - uses: actions/upload-artifact@v4
+        if: env.QINGZUO_PUBLIC_MARKET != '1'
         with:
           name: Plugin-${{ runner.os }}
           path: |

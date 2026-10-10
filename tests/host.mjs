@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { launchPluginTestHost } from '@commerce/plugin-sdk/testing';
@@ -30,6 +30,9 @@ try {
   await expect.poll(async () => { try { return (await readFile(output)).subarray(0, 4).toString(); } catch { return ''; } }).toBe('%PDF');
   const exportedText = execFileSync(process.env.QINGZUO_TEST_PYTHON || 'python', ['-c', 'from pypdf import PdfReader; import sys; print("".join(page.extract_text() for page in PdfReader(sys.argv[1]).pages))', output], { encoding: 'utf8' });
   expect(exportedText).toContain('PLUGIN-012');
+  await mkdir('output', { recursive: true });
+  await copyFile(output, 'output/host-result.pdf');
+  await host.plugin.screenshot({ path: 'output/host-success.png' });
   await host.plugin.locator('input[type="file"]').setInputFiles(path.resolve('文具新大 70X40.pdf'));
   await expect(host.plugin.locator('img[alt="PDF 第 1 页"]')).toHaveAttribute('src', /^commerce-plugin:/);
   await expect.poll(() => host.plugin.evaluate(async token => { try { await window.commercePlugin.invoke('files.read', { token }); return false; } catch { return true; } }, originalResource.split('/').at(-1))).toBe(true);
