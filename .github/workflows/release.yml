@@ -82,6 +82,11 @@ jobs:
           npm run pack
           npm run test:host
       - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Acceptance-${{ runner.os }}
+          path: output/
+      - uses: actions/upload-artifact@v4
         with:
           name: Plugin-${{ runner.os }}
           path: |

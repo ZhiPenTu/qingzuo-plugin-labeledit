@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { launchPluginTestHost } from '@commerce/plugin-sdk/testing';
@@ -33,4 +33,9 @@ try {
   const original = await host.plugin.evaluate(async () => { const status = await window.commercePlugin.invoke('services.call', { service: 'labeledit.pdf', method: 'health' }); return status.ocr.ready; });
   expect(original).toBe(true);
   console.log('Independent LabelEdit artifact: real sandboxed offline OCR, edit, rendered preview, exported text and document resource release passed.');
+} catch (error) {
+  await mkdir('output', { recursive: true });
+  await host.plugin.screenshot({ path: 'output/host-failure.png' }).catch(() => {});
+  await writeFile('output/host-failure.txt', await host.plugin.locator('body').innerText().catch(() => 'Renderer closed.'));
+  throw error;
 } finally { await host.close(); }
