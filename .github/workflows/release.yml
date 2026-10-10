@@ -10,6 +10,10 @@ on:
         description: 'Successful ZhiPenTu/LabelEdit Release commerce desktop validation run ID'
         required: true
         type: string
+      public_market:
+        description: 'Install the immutable published plugin through the signed public market for OCR/edit/export acceptance'
+        type: boolean
+        default: false
 permissions:
   contents: read
 defaults:
@@ -24,6 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       QINGZUO_HOST_RUN_ID: ${{ inputs.host_run_id || vars.QINGZUO_HOST_RUN_ID }}
+      QINGZUO_PUBLIC_MARKET: ${{ inputs.public_market && '1' || '' }}
       GH_TOKEN: ${{ github.token }}
       PYTHONUTF8: '1'
       PYTHONIOENCODING: utf-8

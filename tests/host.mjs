@@ -3,9 +3,12 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { launchPluginTestHost } from '@commerce/plugin-sdk/testing';
+import { launchPublicMarketHost } from './market-helper.mjs';
 const pkg = JSON.parse(await readFile('package.json')), platform = process.platform + '-' + process.arch;
 if (!process.env.QINGZUO_HOST_EXECUTABLE) throw new Error('QINGZUO_HOST_EXECUTABLE must point to a pinned host artifact.');
-const host = await launchPluginTestHost({ executablePath: process.env.QINGZUO_HOST_EXECUTABLE, artifactPath: 'release/' + pkg.commerce.id + '-' + pkg.version + '-' + platform + '.ecplugin', pluginId: pkg.commerce.id });
+const host = process.env.QINGZUO_PUBLIC_MARKET === '1'
+  ? await launchPublicMarketHost({ executablePath: process.env.QINGZUO_HOST_EXECUTABLE, pluginId: pkg.commerce.id, version: pkg.version })
+  : await launchPluginTestHost({ executablePath: process.env.QINGZUO_HOST_EXECUTABLE, artifactPath: 'release/' + pkg.commerce.id + '-' + pkg.version + '-' + platform + '.ecplugin', pluginId: pkg.commerce.id });
 try {
   await host.plugin.getByRole('button', { name: '使用示例标签' }).click();
   await expect(host.plugin.getByRole('button', { name: '选择文字：Batch Number: SG250128', exact: true })).toBeVisible({ timeout: 90000 });
