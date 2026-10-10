@@ -129,7 +129,7 @@ jobs:
           GH_TOKEN: ${{ secrets.MARKET_TRIGGER_TOKEN }}
         run: |
           if [[ -n "$GH_TOKEN" ]]; then
-            gh workflow run ingest.yml --repo ZhiPenTu/qingzuo-market -f repository="$GITHUB_REPOSITORY" -f tag="$GITHUB_REF_NAME"
+            gh api --method POST repos/ZhiPenTu/qingzuo-market/actions/workflows/ingest.yml/dispatches -f ref=main -f "inputs[repository]=$GITHUB_REPOSITORY" -f "inputs[tag]=$GITHUB_REF_NAME"
           else
             echo "The market scheduled workflow will propose this stable release."
           fi
