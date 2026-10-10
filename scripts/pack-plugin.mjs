@@ -7,6 +7,7 @@ const stage = path.resolve('release/plugin');
 await mkdir(stage, { recursive: true });
 await cp('dist', path.join(stage, 'ui'), { recursive: true });
 await cp('LICENSE', path.join(stage, 'LICENSE'));
+await cp('docs/third-party-notices.md', path.join(stage, 'THIRD_PARTY_NOTICES.md'));
 await writeFile(path.join(stage, 'package.json'), JSON.stringify({ name: pkg.name, version: pkg.version, commerce: pkg.commerce }, null, 2));
 const name = pkg.commerce.id + '-' + pkg.version + '-' + platform + '.ecplugin', filename = path.resolve('release', name);
 await pack(stage, filename);

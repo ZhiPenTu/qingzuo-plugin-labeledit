@@ -12,9 +12,13 @@ try {
   await expect.poll(() => host.plugin.locator('img[alt="PDF 第 1 页"]').evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
   const originalResource = await host.plugin.locator('img[alt="PDF 第 1 页"]').getAttribute('src');
   await host.plugin.getByRole('button', { name: '选择文字：Batch Number: SG250128', exact: true }).click();
+  const inspector = host.plugin.getByRole('button', { name: '打开编辑面板', exact: true });
+  if (await inspector.isVisible()) await inspector.click();
   await host.plugin.getByRole('textbox', { name: '替换为', exact: true }).fill('Batch Number: PLUGIN-012');
   await host.plugin.getByRole('button', { name: '应用修改', exact: true }).click();
   await expect(host.plugin.getByText('修改已应用，预览与导出使用相同的排版。', { exact: true })).toBeVisible();
+  const closePanel = host.plugin.getByRole('button', { name: '关闭', exact: true });
+  if (await closePanel.isVisible()) await closePanel.click();
   await expect(host.plugin.locator('img[alt="PDF 第 1 页"]')).toHaveAttribute('src', /^blob:/);
   await expect.poll(() => host.plugin.locator('img[alt="PDF 第 1 页"]').evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
   const output = path.join(host.temporary, 'result.pdf');
