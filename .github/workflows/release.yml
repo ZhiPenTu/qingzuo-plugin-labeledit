@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       host_run_id:
-        description: 'Successful ZhiPenTu/LabelEdit Release commerce desktop validation run ID'
+        description: 'Successful ZhiPenTu/qingzuo-desktop Release commerce desktop validation run ID'
         required: true
         type: string
       public_market:
@@ -49,10 +49,10 @@ jobs:
       - name: Require a pinned, successful host validation
         run: |
           node --input-type=module -e "if(!/^[0-9]+$/.test(process.env.QINGZUO_HOST_RUN_ID||'')) throw new Error('Pinned host run ID required');"
-          gh run view "$QINGZUO_HOST_RUN_ID" --repo ZhiPenTu/LabelEdit --json conclusion,workflowName | node --input-type=module -e "let text='';for await(const chunk of process.stdin)text+=chunk;const run=JSON.parse(text);if(run.conclusion!=='success'||run.workflowName!=='Release commerce desktop')throw new Error('Host validation not successful');"
+          gh run view "$QINGZUO_HOST_RUN_ID" --repo ZhiPenTu/qingzuo-desktop --json conclusion,workflowName | node --input-type=module -e "let text='';for await(const chunk of process.stdin)text+=chunk;const run=JSON.parse(text);if(run.conclusion!=='success'||run.workflowName!=='Release commerce desktop')throw new Error('Host validation not successful');"
       - uses: actions/download-artifact@v4
         with:
-          repository: ZhiPenTu/LabelEdit
+          repository: ZhiPenTu/qingzuo-desktop
           run-id: ${{ env.QINGZUO_HOST_RUN_ID }}
           github-token: ${{ github.token }}
           name: Commerce-${{ runner.os }}
