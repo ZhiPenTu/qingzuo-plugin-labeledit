@@ -2,7 +2,7 @@
 
 Independent PDF label editing and offline OCR plugin. Source extracted from ZhiPenTu/LabelEdit commit 6042881; the original history and published desktop releases remain in that repository.
 
-Plugin ID: official.labeledit. Version: 0.1.2. Requires plugin API ^1.1.0.
+Plugin ID: official.labeledit. Version: 0.1.4. Requires plugin API ^1.1.0.
 
 SDK 1.1.1 is pinned to the platform's immutable sdk-v1.1.1 Release tarball, including its lockfile integrity. It contains the corrected packaged-host testing helper; the runtime API remains 1.1.0.
 
