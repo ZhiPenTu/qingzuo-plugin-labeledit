@@ -25,6 +25,12 @@
     --color-input: var(--input);
     --color-border: var(--border);
     --color-destructive: var(--destructive);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-info: var(--info);
+    --color-info-foreground: var(--info-foreground);
     --color-accent-foreground: var(--accent-foreground);
     --color-accent: var(--accent);
     --color-muted-foreground: var(--muted-foreground);
@@ -58,6 +64,10 @@
   --accent: #edf2eb; --accent-foreground: #20312a;
   --destructive: #b42318; --border: #dfe5de; --input: #d7dfd5; --ring: #28654a;
   --radius: 0.625rem; --canvas: #e9ede7;
+  --success: #28654a; --success-foreground: #ffffff;
+  --warning: #956219; --warning-foreground: #faf0dd;
+  --info: #20312a; --info-foreground: #edf2eb;
+  --chart-1: #28654a; --chart-2: #956219; --chart-3: #466b7a; --chart-4: #a14f3f; --chart-5: #52645a;
 }
 .dark {
   --background: #19211d; --foreground: #edf3ee;
@@ -69,6 +79,10 @@
   --accent: #2b382f; --accent-foreground: #edf3ee;
   --destructive: #f87171; --border: #36453a; --input: #425447; --ring: #99d8ad;
   --canvas: #121a15;
+  --success: #bde6c8; --success-foreground: #2c4233;
+  --warning: #ebc780; --warning-foreground: #443821;
+  --info: #edf3ee; --info-foreground: #2b382f;
+  --chart-1: #99d8ad; --chart-2: #ebc780; --chart-3: #8eb9c7; --chart-4: #e69a86; --chart-5: #b2c0b6;
 }
 
 @layer base {
@@ -142,7 +156,7 @@ h2 { font-size: 14px; font-weight: 600; line-height: 1.4; }
 .handle.bottom-left { bottom: -5px; left: -5px; cursor: nesw-resize; }
 .handle.bottom-right { bottom: -5px; right: -5px; cursor: nwse-resize; }
 .drawn-region { position: absolute; border: 1.5px dashed var(--primary); background: color-mix(in srgb, var(--primary) 12%, transparent); pointer-events: none; }
-.image-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; background: #ffffffcc; color: #647180; font-size: 13px; }
+.image-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; background: color-mix(in srgb, var(--card) 88%, transparent); color: var(--muted-foreground); font-size: 13px; }
 .compare-button { position: absolute; top: 14px; right: 14px; z-index: 3; }
 .canvas-status { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 16px; min-height: 48px; border-top: 1px solid var(--border); background: var(--background); color: var(--muted-foreground); font-size: 12px; }
 .page-controls, .recognition-status { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
