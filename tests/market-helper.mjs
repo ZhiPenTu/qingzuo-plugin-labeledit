@@ -18,7 +18,7 @@ export async function launchPublicMarketHost({ executablePath, pluginId, version
     const status = await page.evaluate(() => window.commerceDesktop.invoke('status'));
     expect(status.plugins.find(plugin => plugin.id === pluginId)).toMatchObject({ version, source: 'market', enabled: true });
     await page.getByRole('button', { name: '工具中心', exact: true }).click();
-    await page.locator('[data-slot="card"]').filter({ has: page.getByRole('heading', { name: 'LabelEdit', exact: true }) }).getByRole('button', { name: '打开工具', exact: true }).click();
+    await page.locator('[data-slot="card"]').filter({ has: page.getByRole('heading', { name: 'LabelEdit', exact: true }) }).getByRole('button', { name: /^打开(?:工具)?$/ }).click();
     await expect.poll(() => app.context().pages().some(candidate => candidate.url().startsWith('commerce-plugin://' + pluginId + '/'))).toBe(true);
     const plugin = app.context().pages().find(candidate => candidate.url().startsWith('commerce-plugin://' + pluginId + '/'));
     console.log('Installed LabelEdit ' + version + ' from its immutable public Release through the signed catalog.');
