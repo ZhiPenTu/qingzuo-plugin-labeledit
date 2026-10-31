@@ -1,6 +1,6 @@
 {
   "name": "qingzuo-plugin-labeledit",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "type": "module",
   "commerce": {
@@ -11,7 +11,7 @@
     "category": "标签与文档",
     "api": "^1.1.0",
     "ui": "ui/index.html",
-    "releaseNotes": "界面配色统一为轻作底座语义色，支持跟随系统的浅色与深色模式。",
+    "releaseNotes": "简化页头与空状态，收紧工具栏和侧栏间距，保留本地识别、编辑与导出流程，支持深色与窄屏。",
     "permissions": {
       "files": true
     },

@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
-import { launchPluginTestHost } from '@commerce/plugin-sdk/testing';
+import { launchPluginTestHost } from './launch-host.mjs';
 import { launchPublicMarketHost } from './market-helper.mjs';
 const pkg = JSON.parse(await readFile('package.json')), platform = process.platform + '-' + process.arch;
 if (!process.env.QINGZUO_HOST_EXECUTABLE) throw new Error('QINGZUO_HOST_EXECUTABLE must point to a pinned host artifact.');
