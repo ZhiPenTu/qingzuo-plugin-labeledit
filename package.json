@@ -35,6 +35,9 @@
     "test:backend": "python -m pytest -q",
     "build:backend": "python scripts/build_backend.py --distpath release/plugin/backend",
     "pack": "node scripts/pack-plugin.mjs",
+    "clean:cache": "node scripts/clean-build-cache.mjs",
+    "clean:releases": "node scripts/clean-build-cache.mjs --releases",
+    "clean:cache:deep": "node scripts/clean-build-cache.mjs --deep --releases",
     "test:host": "node tests/host.mjs"
   },
   "dependencies": {
